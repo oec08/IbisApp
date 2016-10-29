@@ -17,6 +17,7 @@
 
     <android.support.design.widget.FloatingActionButton
         android:src="@mipmap/ic_pencil"
+        android:id="@+id/fabComposeTweet"
         app:fabSize="normal"
         android:layout_width="wrap_content"
         android:layout_gravity="bottom|right"

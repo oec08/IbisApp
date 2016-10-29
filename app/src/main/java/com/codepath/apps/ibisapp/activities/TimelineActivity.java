@@ -1,15 +1,19 @@
 package com.codepath.apps.ibisapp.activities;
 
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
 import com.codepath.apps.ibisapp.R;
 import com.codepath.apps.ibisapp.TwitterAppApplication;
 import com.codepath.apps.ibisapp.TwitterClient;
 import com.codepath.apps.ibisapp.adapters.TweetsArrayAdapter;
+import com.codepath.apps.ibisapp.fragments.ComposeTweetDialog;
 import com.codepath.apps.ibisapp.models.Tweet;
 import com.codepath.apps.ibisapp.utils.EndlessScrollListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -18,7 +22,6 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -27,11 +30,13 @@ public class TimelineActivity extends AppCompatActivity {
     private TweetsArrayAdapter aTweets;
     private ArrayList<Tweet> tweets;
     private ListView lvTweets;
+    private FloatingActionButton btnComposeTweet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         lvTweets = (ListView)findViewById(R.id.lvTweets);
+        btnComposeTweet = (FloatingActionButton)findViewById(R.id.fabComposeTweet);
         // Create the arraylist from data source
         tweets = new ArrayList<>();
         aTweets = new TweetsArrayAdapter(this, tweets);
@@ -67,7 +72,22 @@ public class TimelineActivity extends AppCompatActivity {
                 return true; // ONLY if more data is actually being loaded; false otherwise.
             }
         });
+
+        btnComposeTweet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showComposeTweetDialog();
+            }
+        });
+
+
     }
+    private void showComposeTweetDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        ComposeTweetDialog composeTweetDialog = new ComposeTweetDialog();
+        composeTweetDialog.show(fm, "fragment_compose_tweet");
+    }
+
     // Send an API request to get the timeline json
     // fill the listview as well by creating the tweet object from json
     private void populateTimeline(long lastUid) {
