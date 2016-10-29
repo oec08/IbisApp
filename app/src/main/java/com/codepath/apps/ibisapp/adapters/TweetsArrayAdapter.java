@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.codepath.apps.ibisapp.R;
 import com.codepath.apps.ibisapp.models.Tweet;
+import com.codepath.apps.ibisapp.utils.StringUtils;
 import com.codepath.apps.ibisapp.utils.TimeFormatter;
 import com.squareup.picasso.Picasso;
 
@@ -55,7 +56,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
 
         viewHolder.tvTimeAgo.setText(TimeFormatter.getDuration(tweet.getCreatedAt(), TimeFormatter.TWITTER_FORMAT));
         viewHolder.tvName.setText(tweet.getUser().getName());
-        String userNameWithHashtag = "@" + tweet.getUser().getScreenName();
+        String userNameWithHashtag = StringUtils.addHashtagToString(tweet.getUser().getScreenName());
         viewHolder.tvUserName.setText(userNameWithHashtag);
         viewHolder.tvBody.setText(tweet.getBody());
         viewHolder.tvProfileImage.setImageResource(android.R.color.transparent);
