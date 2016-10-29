@@ -3,6 +3,7 @@ package com.codepath.apps.ibisapp.activities;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,8 @@ import com.codepath.apps.ibisapp.utils.EndlessScrollListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,6 +34,7 @@ public class TimelineActivity extends AppCompatActivity {
     private ArrayList<Tweet> tweets;
     private ListView lvTweets;
     private FloatingActionButton btnComposeTweet;
+    private SwipeRefreshLayout swipeContainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,23 +47,33 @@ public class TimelineActivity extends AppCompatActivity {
 
         lvTweets.setAdapter(aTweets);
         client = TwitterAppApplication.getRestClient(); // Singleton client
-        populateTimeline(1);
+        populateTimeline(1, false);
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                Log.d("DEBUG", tweets.toString());
+                populateTimeline(tweets.get(0).getUid(), true);
+            }
+        });
+        //swipeContainer.setColorSchemeColors(android.R.color.holo_blue_bright, android.R.color.holo_green_dark, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+
         lvTweets.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public boolean onLoadMore(int page, int totalItemsCount) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to your AdapterView
-                if(page > 0) {
-                    page = page - 1;
-                }
-                final int  offset = page;
                 Handler handler = new Handler();
                 Runnable runnableCode = new Runnable() {
                     @Override
                     public void run() {
                         // Do something here on the main thread
                         Log.d("Waiting a second", "Called on main thread");
-                        populateTimeline(tweets.get(tweets.size() - 1).getUid());
+                        populateTimeline(tweets.get(tweets.size() - 1).getUid(), false);
                     }
                 };
                 handler.postDelayed(runnableCode, 1000);
@@ -84,8 +98,8 @@ public class TimelineActivity extends AppCompatActivity {
 
     // Send an API request to get the timeline json
     // fill the listview as well by creating the tweet object from json
-    private void populateTimeline(long lastUid) {
-        client.getHomeTimeLine( lastUid, new JsonHttpResponseHandler() {
+    private void populateTimeline(long lastUid, final boolean isSwipeToRefresh) {
+        client.getHomeTimeLine( lastUid, isSwipeToRefresh,  new JsonHttpResponseHandler() {
          // Success
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -94,9 +108,23 @@ public class TimelineActivity extends AppCompatActivity {
                 // DESERIALIZE JSON
                 // CREATE MODELS
                 // LOAD MODEL DATA INTO LISTVIEW
-                aTweets.addAll(Tweet.fromJsonArray(response));
+                if(!aTweets.isEmpty() && isSwipeToRefresh) {
+                    for(int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject tweetJson = response.getJSONObject(i);
+                            aTweets.insert(Tweet.fromJSON(tweetJson), i);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            continue;
+                        }
+                    }
+                }
+                else {
+                    aTweets.addAll(Tweet.fromJsonArray(response));
+                }
                 aTweets.notifyDataSetChanged();
                 Log.d("DEBUG", aTweets.toString());
+                swipeContainer.setRefreshing(false);
             }
 
             @Override
