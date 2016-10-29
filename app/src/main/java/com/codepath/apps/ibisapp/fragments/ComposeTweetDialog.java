@@ -62,6 +62,7 @@ public class ComposeTweetDialog extends AppCompatDialogFragment {
         btnTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sendTweet();
                 getActivity().finish();
             }
         });
@@ -87,6 +88,20 @@ public class ComposeTweetDialog extends AppCompatDialogFragment {
         });
 
         return view;
+    }
+    private void sendTweet() {
+        String composedTweet = mEditText.getText().toString();
+        client.doComposeTweet(composedTweet, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.d("DEBUG", response.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("DEBUG", errorResponse.toString());
+            }
+        });
     }
     private void setupViews() {
         client = TwitterAppApplication.getRestClient();
