@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnTweet"
         android:layout_below="@+id/etComposeTweet"
+        android:backgroundTint="#009688"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -29,7 +30,7 @@
     <EditText
         android:id="@+id/etComposeTweet"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="100dp"
         android:gravity="start"
         android:textAlignment="textStart"
         android:layout_alignParentTop="true"
@@ -67,5 +68,17 @@
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/tvUsername"
         android:layout_alignStart="@+id/tvUsername" />
+
+    <Button
+        android:text="@string/btnX"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:textColor="@color/colorPrimary"
+        android:background="@android:color/transparent"
+        android:id="@+id/btnCloseDialog"
+        android:textSize="40sp"
+        android:layout_alignBottom="@+id/tvUsername"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

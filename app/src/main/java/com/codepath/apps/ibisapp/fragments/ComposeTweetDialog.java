@@ -1,5 +1,6 @@
 package com.codepath.apps.ibisapp.fragments;
 
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialogFragment;
@@ -9,9 +10,12 @@ import com.codepath.apps.ibisapp.TwitterClient;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,17 +37,21 @@ import cz.msebera.android.httpclient.Header;
  * Created by ocarty on 10/29/2016.
  */
 
-public class ComposeTweetDialog extends AppCompatDialogFragment {
+public class ComposeTweetDialog extends AppCompatDialogFragment implements TextView.OnEditorActionListener {
     private EditText mEditText;
     private TextView tvName;
     private TextView tvUsername;
     private ImageView ivProfileImage;
     private TextView tvTweetLength;
     private Button btnTweet;
-    public TwitterClient client;
+    private TwitterClient client;
+    private Button btnCloseDialog;
 
     public ComposeTweetDialog() {
         // Empty constructor required for DialogFragment
+    }
+    public interface EditNameDialogListener {
+        void onFinishEditDialog(String inputText);
     }
 
     @Override
@@ -56,6 +64,19 @@ public class ComposeTweetDialog extends AppCompatDialogFragment {
         tvName = (TextView)view.findViewById(R.id.tvName);
         tvUsername = (TextView)view.findViewById(R.id.tvUsername);
         ivProfileImage = (ImageView) view.findViewById(R.id.ivProfileImage);
+        btnCloseDialog = (Button)view.findViewById(R.id.btnCloseDialog);
+        // Show soft keyboard automatically
+        mEditText.requestFocus();
+        getDialog().getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        mEditText.setOnEditorActionListener(this);
+
+        btnCloseDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
         setupViews();
         getDialog().setTitle("Compose Tweet");
 
@@ -84,6 +105,13 @@ public class ComposeTweetDialog extends AppCompatDialogFragment {
             {
                 String length = 140 - s.toString().length() + "/140";
                 tvTweetLength.setText(length);
+                int charactersLeft = 140 - s.toString().length();
+                if(charactersLeft < 0) {
+                    tvTweetLength.setTextColor(Color.RED);
+                }
+                else {
+                    tvTweetLength.setTextColor(Color.BLACK);
+                }
             }
         });
 
@@ -94,7 +122,8 @@ public class ComposeTweetDialog extends AppCompatDialogFragment {
         client.doComposeTweet(composedTweet, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("DEBUG", response.toString());
+                Log.d("Sending Tweet", response.toString());
+                // Going back to Home Timeline after tweet is processed
             }
 
             @Override
@@ -123,4 +152,16 @@ public class ComposeTweetDialog extends AppCompatDialogFragment {
         });
     }
 
-}
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (EditorInfo.IME_ACTION_DONE == actionId) {
+            // Return input text to activity
+            EditNameDialogListener activity = (EditNameDialogListener) getActivity();
+            activity.onFinishEditDialog(mEditText.getText().toString());
+            this.dismiss();
+            return true;
+        }
+        return false;
+    }
+    }
+
