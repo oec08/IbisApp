@@ -1,4 +1,4 @@
-package com.codepath.apps.ibisapp;
+package com.codepath.apps.ibisapp.activities;
 
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 
+import com.codepath.apps.ibisapp.R;
+import com.codepath.apps.ibisapp.TwitterAppApplication;
+import com.codepath.apps.ibisapp.TwitterClient;
 import com.codepath.apps.ibisapp.adapters.TweetsArrayAdapter;
 import com.codepath.apps.ibisapp.models.Tweet;
 import com.codepath.apps.ibisapp.utils.EndlessScrollListener;
