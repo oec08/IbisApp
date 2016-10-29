@@ -59,12 +59,6 @@ public class TimelineActivity extends AppCompatActivity {
                     public void run() {
                         // Do something here on the main thread
                         Log.d("Waiting a second", "Called on main thread");
-                        ArrayList<Long> longList = new ArrayList<Long>();
-                        for(Tweet a : tweets) {
-                           longList.add(a.getUid());
-                        }
-
-                        Collections.min(longList);
                         populateTimeline(tweets.get(tweets.size() - 1).getUid());
                     }
                 };
