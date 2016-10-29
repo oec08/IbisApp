@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.codepath.apps.ibisapp.R;
@@ -24,27 +25,41 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         super(context,0, tweets);
     }
 
+    private static class ViewHolder {
+        ImageView tvProfileImage;
+        TextView tvUserName;
+        TextView tvName;
+        TextView tvBody;
+        TextView tvTimeAgo;
+    }
+
     // Override and setup custom template
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Tweet tweet = getItem(position);
+        ViewHolder viewHolder;
         if(convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet, parent, false);
+            viewHolder = new ViewHolder();
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.item_tweet, parent, false);
+            viewHolder.tvProfileImage = (ImageView)convertView.findViewById(R.id.ivProfileImage);
+            viewHolder.tvUserName = (TextView)convertView.findViewById(R.id.tvUserName);
+            viewHolder.tvName = (TextView)convertView.findViewById(R.id.tvName);
+            viewHolder.tvBody = (TextView)convertView.findViewById(R.id.tvBody);
+            viewHolder.tvTimeAgo = (TextView)convertView.findViewById(R.id.tvTimeAgo);
+            convertView.setTag(viewHolder);
         }
-        ImageView tvProfileImage = (ImageView)convertView.findViewById(R.id.ivProfileImage);
-        TextView tvUserName = (TextView)convertView.findViewById(R.id.tvUserName);
-        TextView tvName = (TextView)convertView.findViewById(R.id.tvName);
-        TextView tvBody = (TextView)convertView.findViewById(R.id.tvBody);
-        TextView tvTimeAgo = (TextView)convertView.findViewById(R.id.tvTimeAgo);
+        else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
 
-
-        tvTimeAgo.setText(TimeFormatter.getDuration(tweet.getCreatedAt(), TimeFormatter.TWITTER_FORMAT));
-        tvName.setText(tweet.getUser().getName());
+        viewHolder.tvTimeAgo.setText(TimeFormatter.getDuration(tweet.getCreatedAt(), TimeFormatter.TWITTER_FORMAT));
+        viewHolder.tvName.setText(tweet.getUser().getName());
         String userNameWithHashtag = "@" + tweet.getUser().getScreenName();
-        tvUserName.setText(userNameWithHashtag);
-        tvBody.setText(tweet.getBody());
-        tvProfileImage.setImageResource(android.R.color.transparent);
-        Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(tvProfileImage);
+        viewHolder.tvUserName.setText(userNameWithHashtag);
+        viewHolder.tvBody.setText(tweet.getBody());
+        viewHolder.tvProfileImage.setImageResource(android.R.color.transparent);
+        Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(viewHolder.tvProfileImage);
 
         return convertView;
     }
