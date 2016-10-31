@@ -38,6 +38,7 @@ public class TimelineActivity extends AppCompatActivity {
     private ListView lvTweets;
     private FloatingActionButton btnComposeTweet;
     private SwipeRefreshLayout swipeContainer;
+    private static final int REQUEST_CODE = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,5 +154,15 @@ public class TimelineActivity extends AppCompatActivity {
                 Log.d("DEBUG", errorResponse.toString());
             }
         });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            Tweet tweet = Parcels.unwrap(getIntent().getParcelableExtra("tweet"));
+            aTweets.insert(tweet, 0);
+            aTweets.notifyDataSetChanged();
+
+        }
     }
 }

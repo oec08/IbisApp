@@ -1,5 +1,6 @@
 package com.codepath.apps.ibisapp.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialogFragment;
@@ -22,14 +23,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.ibisapp.R;
+import com.codepath.apps.ibisapp.models.Tweet;
 import com.codepath.apps.ibisapp.models.User;
 import com.codepath.apps.ibisapp.utils.StringUtils;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import cz.msebera.android.httpclient.Header;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by ocarty on 10/29/2016.
@@ -121,7 +127,10 @@ public class ComposeTweetDialog extends AppCompatDialogFragment implements TextV
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.d("Sending Tweet", response.toString());
-                // Going back to Home Timeline after tweet is processed
+                        Tweet tweetJson = Tweet.fromJSON(response);
+                        Intent intent = new Intent();
+                        intent.putExtra("tweet", Parcels.wrap(tweetJson));
+                        getActivity().setResult(RESULT_OK, intent);
             }
 
             @Override
