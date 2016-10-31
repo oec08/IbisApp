@@ -6,6 +6,7 @@
     <string name="title_activity_timeline">Home Timeline</string>
     <string name="btnTweet">Tweet</string>
     <string name="hintEtComposeTweet">What\'s Happening?</string>
+    <string name="tweetDetails">Tweet Details</string>
     <string name="btnX">X</string>
 
 </resources>

@@ -2,11 +2,12 @@ package com.codepath.apps.ibisapp.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 /**
  * Created by ocarty on 10/28/2016.
  */
-
+@Parcel
 public class User {
     // List attributes
     private String name;

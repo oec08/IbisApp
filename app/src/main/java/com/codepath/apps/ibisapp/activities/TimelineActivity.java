@@ -1,5 +1,6 @@
 package com.codepath.apps.ibisapp.activities;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.codepath.apps.ibisapp.R;
@@ -22,6 +24,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,7 +76,11 @@ public class TimelineActivity extends AppCompatActivity {
                     public void run() {
                         // Do something here on the main thread
                         Log.d("Waiting a second", "Called on main thread");
-                        populateTimeline(tweets.get(tweets.size() - 1).getUid(), false);
+                        long currentMin = tweets.get(tweets.size() - 1).getUid();
+                        if(currentMin > 0) {
+                            currentMin = currentMin - 1;
+                        }
+                        populateTimeline(currentMin, false);
                     }
                 };
                 handler.postDelayed(runnableCode, 1000);
@@ -85,6 +92,15 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showComposeTweetDialog();
+            }
+        });
+
+        lvTweets.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(TimelineActivity.this, TweetDetailViewActivity.class);
+                intent.putExtra("tweet", Parcels.wrap(tweets.get(position)));
+                startActivity(intent);
             }
         });
 

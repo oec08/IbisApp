@@ -40,8 +40,11 @@
                     android:scheme="oauth" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.TimelineActivity"
-            android:label="@string/title_activity_timeline" >
+        <activity
+            android:name=".activities.TimelineActivity"
+            android:label="@string/title_activity_timeline"></activity>
+        <activity android:name=".activities.TweetDetailViewActivity"
+            android:label="@string/tweetDetails">
         </activity>
     </application>
 

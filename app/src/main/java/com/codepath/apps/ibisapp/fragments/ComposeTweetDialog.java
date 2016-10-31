@@ -1,7 +1,6 @@
 package com.codepath.apps.ibisapp.fragments;
 
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialogFragment;
 
@@ -22,13 +21,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.ibisapp.R;
-import com.codepath.apps.ibisapp.models.Tweet;
 import com.codepath.apps.ibisapp.models.User;
 import com.codepath.apps.ibisapp.utils.StringUtils;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;

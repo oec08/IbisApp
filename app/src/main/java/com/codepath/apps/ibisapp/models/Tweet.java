@@ -3,6 +3,7 @@ package com.codepath.apps.ibisapp.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 
  */
 // Parse the JSON + Store the data, encapulate state logic or display logic
+@Parcel
 public class Tweet {
     public String getBody() {
         return body;
