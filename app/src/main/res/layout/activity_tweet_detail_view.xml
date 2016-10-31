@@ -36,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvUserNameDetail"
+        android:autoLink="all"
         android:layout_toRightOf="@id/ivProfileImageDetail"
         android:id="@+id/tvBodyDetail" />
 

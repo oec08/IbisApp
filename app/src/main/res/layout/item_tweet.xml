@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:descendantFocusability="blocksDescendants"
     android:layout_height="match_parent"
     android:padding="10dp">
 
@@ -36,6 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvUserName"
+        android:autoLink="all"
         android:layout_toRightOf="@id/ivProfileImage"
         android:id="@+id/tvBody" />
 
