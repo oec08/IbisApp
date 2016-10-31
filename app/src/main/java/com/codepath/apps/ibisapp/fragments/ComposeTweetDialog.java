@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialogFragment;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.ibisapp.TwitterAppApplication;
 import com.codepath.apps.ibisapp.TwitterClient;
 import android.text.Editable;
@@ -139,7 +140,7 @@ public class ComposeTweetDialog extends AppCompatDialogFragment implements TextV
                 Log.d("DEBUG", response.toString());
                 tvName.setText(User.fromJSONObject(response).getName());
                 tvUsername.setText(StringUtils.addHashtagToString(User.fromJSONObject(response).getScreenName()));
-                Picasso.with(getContext()).load(User.fromJSONObject(response).getProfileImageUrl()).into(ivProfileImage);
+                Glide.with(getContext()).load(User.fromJSONObject(response).getProfileImageUrl()).into(ivProfileImage);
             }
 
             @Override

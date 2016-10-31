@@ -60,7 +60,9 @@ public class TimelineActivity extends AppCompatActivity {
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
                 Log.d("DEBUG", tweets.toString());
-                populateTimeline(tweets.get(0).getUid(), true);
+                if(tweets.size() > 0) {
+                    populateTimeline(tweets.get(0).getUid(), true);
+                }
             }
         });
         swipeContainer.setColorSchemeColors(getResources().getColor(android.R.color.holo_blue_bright),
