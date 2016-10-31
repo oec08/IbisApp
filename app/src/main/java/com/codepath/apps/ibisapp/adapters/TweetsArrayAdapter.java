@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.ibisapp.R;
 import com.codepath.apps.ibisapp.models.Tweet;
 import com.codepath.apps.ibisapp.utils.StringUtils;
@@ -60,7 +61,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         viewHolder.tvUserName.setText(userNameWithHashtag);
         viewHolder.tvBody.setText(tweet.getBody());
         viewHolder.tvProfileImage.setImageResource(android.R.color.transparent);
-        Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(viewHolder.tvProfileImage);
+        Glide.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(viewHolder.tvProfileImage);
 
         return convertView;
     }

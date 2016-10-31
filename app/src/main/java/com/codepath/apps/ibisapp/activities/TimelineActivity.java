@@ -63,7 +63,10 @@ public class TimelineActivity extends AppCompatActivity {
                 populateTimeline(tweets.get(0).getUid(), true);
             }
         });
-        //swipeContainer.setColorSchemeColors(android.R.color.holo_blue_bright, android.R.color.holo_green_dark, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        swipeContainer.setColorSchemeColors(getResources().getColor(android.R.color.holo_blue_bright),
+                getResources().getColor(android.R.color.holo_green_dark),
+                getResources().getColor(android.R.color.holo_orange_light),
+                getResources().getColor(android.R.color.holo_red_light));
 
         lvTweets.setOnScrollListener(new EndlessScrollListener() {
             @Override
