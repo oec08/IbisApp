@@ -27,6 +27,8 @@
         android:id="@+id/fabComposeTweet"
         app:fabSize="normal"
         android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
         android:layout_gravity="bottom|right"
         app:layout_anchorGravity="bottom|right|end"
         android:layout_height="wrap_content"

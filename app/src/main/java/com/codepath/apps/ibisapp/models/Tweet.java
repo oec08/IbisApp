@@ -1,5 +1,8 @@
 package com.codepath.apps.ibisapp.models;
 
+import android.os.Build;
+import android.text.Html;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +21,12 @@ import java.util.ArrayList;
 @Parcel
 public class Tweet {
     public String getBody() {
-        return body;
+        if (Build.VERSION.SDK_INT >= 24) {
+            return Html.fromHtml(body, Html.FROM_HTML_MODE_COMPACT).toString();
+        } else {
+            return Html.fromHtml(body).toString();
+        }
+
     }
 
     public long getUid() {
@@ -29,17 +37,9 @@ public class Tweet {
         return user;
     }
 
-    public long getLatestUid() {
-        return latestUid;
-    }
-
     public String getCreatedAt() {
 
         return createdAt;
-    }
-
-    public void setLatestUid(long uid) {
-        this.uid = uid;
     }
 
     // List out the attributes
@@ -47,7 +47,6 @@ public class Tweet {
     private long uid; // unique id for the tweet
     private User user;
     private String createdAt;
-    private long latestUid;
 
     public static Tweet fromJSON(JSONObject jsonObject) {
         Tweet tweet = new Tweet();
