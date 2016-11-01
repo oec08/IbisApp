@@ -27,39 +27,33 @@ import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
-import java.util.Collections;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity {
     public TwitterClient client;
     private TweetsArrayAdapter aTweets;
     private ArrayList<Tweet> tweets;
-    private ListView lvTweets;
-    private FloatingActionButton btnComposeTweet;
-    private SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.lvTweets) ListView lvTweets;
+    @BindView(R.id.fabComposeTweet) FloatingActionButton btnComposeTweet;
+    @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     private static final int REQUEST_CODE = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        lvTweets = (ListView)findViewById(R.id.lvTweets);
-        btnComposeTweet = (FloatingActionButton)findViewById(R.id.fabComposeTweet);
+        ButterKnife.bind(this);
         // Create the arraylist from data source
         tweets = new ArrayList<>();
         aTweets = new TweetsArrayAdapter(this, tweets);
-
         lvTweets.setAdapter(aTweets);
         client = TwitterAppApplication.getRestClient(); // Singleton client
         populateTimeline(1, false);
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
                 Log.d("DEBUG", tweets.toString());
                 if(tweets.size() > 0) {
                     populateTimeline(tweets.get(0).getUid(), true);
@@ -126,10 +120,6 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 Log.d("DEBUG", response.toString());
-                // JSON HERE
-                // DESERIALIZE JSON
-                // CREATE MODELS
-                // LOAD MODEL DATA INTO LISTVIEW
                 if(!aTweets.isEmpty() && isSwipeToRefresh) {
                     for(int i = 0; i < response.length(); i++) {
                         try {

@@ -5,6 +5,17 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <ImageButton
+        android:id="@+id/btnCloseDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:src="@mipmap/ic_action_clear"
+        android:background="@android:color/transparent"
+        tools:text="Cancel Button"/>
+
     <Button
         android:text="@string/btnTweet"
         android:layout_width="wrap_content"
@@ -69,16 +80,6 @@
         android:layout_alignLeft="@+id/tvUsername"
         android:layout_alignStart="@+id/tvUsername" />
 
-    <Button
-        android:text="@string/btnX"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:textColor="@color/colorPrimary"
-        android:background="@android:color/transparent"
-        android:id="@+id/btnCloseDialog"
-        android:textSize="40sp"
-        android:layout_alignBottom="@+id/tvUsername"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+
 
 </RelativeLayout>

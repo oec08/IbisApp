@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,7 +50,7 @@ public class ComposeTweetDialog extends AppCompatDialogFragment implements TextV
     private TextView tvTweetLength;
     private Button btnTweet;
     private TwitterClient client;
-    private Button btnCloseDialog;
+    private ImageButton btnCloseDialog;
 
     public ComposeTweetDialog() {
         // Empty constructor required for DialogFragment
@@ -68,7 +69,7 @@ public class ComposeTweetDialog extends AppCompatDialogFragment implements TextV
         tvName = (TextView)view.findViewById(R.id.tvName);
         tvUsername = (TextView)view.findViewById(R.id.tvUsername);
         ivProfileImage = (ImageView) view.findViewById(R.id.ivProfileImage);
-        btnCloseDialog = (Button)view.findViewById(R.id.btnCloseDialog);
+        btnCloseDialog = (ImageButton)view.findViewById(R.id.btnCloseDialog);
         // Show soft keyboard automatically
         mEditText.requestFocus();
         getDialog().getWindow().setSoftInputMode(
@@ -111,9 +112,11 @@ public class ComposeTweetDialog extends AppCompatDialogFragment implements TextV
                 tvTweetLength.setText(length);
                 int charactersLeft = 140 - s.toString().length();
                 if(charactersLeft < 0) {
+                    btnTweet.setEnabled(false);
                     tvTweetLength.setTextColor(Color.RED);
                 }
                 else {
+                    btnTweet.setEnabled(true);
                     tvTweetLength.setTextColor(Color.BLACK);
                 }
             }
