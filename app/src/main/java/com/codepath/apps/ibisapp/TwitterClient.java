@@ -8,6 +8,7 @@ import android.content.Context;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 /*
@@ -60,6 +61,42 @@ public class TwitterClient extends OAuthBaseClient {
 		RequestParams params = new RequestParams();
 		params.put("status", composedTweet);
 		getClient().post(apiUrl, params, handler);
+	}
+
+	public void getMentionsTimeline(long lastUid, boolean isSwipeToRefresh, JsonHttpResponseHandler jsonHttpResponseHandler) {
+		String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		if(lastUid == 1) {
+			params.put("since_id", lastUid);
+		}
+		else if(isSwipeToRefresh) {
+			params.put("since_id", lastUid);
+		}
+		else {
+			params.put("max_id", lastUid);
+		}
+		// Execute the request
+		getClient().get(apiUrl, params, jsonHttpResponseHandler);
+	}
+
+	public void getUserTimeline(long lastUid, boolean isSwipeToRefresh, String screenName, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/user_timeline.json");
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		if(lastUid == 1) {
+			params.put("since_id", lastUid);
+		}
+		else if(isSwipeToRefresh) {
+			params.put("since_id", lastUid);
+		}
+		else {
+			params.put("max_id", lastUid);
+		}
+		params.put("screen_name", screenName);
+		// Execute the request
+		getClient().get(apiUrl, params, handler);
+
 	}
 
 	// Compose tweet

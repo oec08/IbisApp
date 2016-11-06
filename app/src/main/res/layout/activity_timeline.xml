@@ -1,38 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_timeline"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.codepath.apps.ibisapp.activities.TimelineActivity">
+    android:layout_width="match_parent">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<com.astuetz.PagerSlidingTabStrip
+    android:id="@+id/tabs"
+    app:pstsShouldExpand="true"
+    app:pstsTextAllCaps="true"
+    android:layout_width="match_parent"
+    android:layout_height="48dp" />
 
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/lvTweets" />
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:src="@mipmap/ic_pencil"
-        android:id="@+id/fabComposeTweet"
-        app:fabSize="normal"
-        android:layout_width="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_gravity="bottom|right"
-        app:layout_anchorGravity="bottom|right|end"
-        android:layout_height="wrap_content"
-        app:backgroundTint="#009688"
-        app:rippleColor="?android:attr/colorAccent" />
-
-</android.support.design.widget.CoordinatorLayout>
+<android.support.v4.view.ViewPager
+android:id="@+id/viewpager"
+android:layout_width="match_parent"
+    android:layout_below="@id/tabs"
+android:layout_height="wrap_content"
+android:background="@android:color/white" />
+</RelativeLayout>

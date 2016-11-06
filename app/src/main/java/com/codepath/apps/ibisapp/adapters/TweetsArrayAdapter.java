@@ -1,6 +1,7 @@
 package com.codepath.apps.ibisapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.ibisapp.R;
+import com.codepath.apps.ibisapp.activities.ProfileActivity;
 import com.codepath.apps.ibisapp.models.Tweet;
 import com.codepath.apps.ibisapp.utils.StringUtils;
 import com.codepath.apps.ibisapp.utils.TimeFormatter;
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -38,7 +42,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
     // Override and setup custom template
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Tweet tweet = getItem(position);
+        final Tweet tweet = getItem(position);
         ViewHolder viewHolder;
         if(convertView == null) {
             viewHolder = new ViewHolder();
@@ -62,6 +66,16 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         viewHolder.tvBody.setText(tweet.getBody());
         viewHolder.tvProfileImage.setImageResource(android.R.color.transparent);
         Glide.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(viewHolder.tvProfileImage);
+
+        viewHolder.tvProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ProfileActivity.class);
+                intent.putExtra("user", Parcels.wrap(tweet.getUser()));
+                intent.putExtra("screen_name", tweet.getUser().getScreenName());
+                getContext().startActivity(intent);
+            }
+        });
 
         return convertView;
     }
