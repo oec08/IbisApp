@@ -68,13 +68,13 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         viewHolder.tvBody.setText(tweet.getBody());
         viewHolder.tvProfileImage.setImageResource(android.R.color.transparent);
         Glide.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(viewHolder.tvProfileImage);
-//        if(tweet.getEntity()!= null) {
-//            viewHolder.tvMediaImage.setVisibility(View.VISIBLE);
-//            Glide.with(getContext()).load(tweet.getEntity().getMediaUrl()).into(viewHolder.tvMediaImage);
-//        }
-//        else {
-//            viewHolder.tvMediaImage.setVisibility(View.GONE);
-//        }
+        if(tweet.getEntity().getMediaUrl()!= null) {
+            Glide.with(getContext()).load(tweet.getEntity().getMediaUrl()).into(viewHolder.tvMediaImage);
+            viewHolder.tvMediaImage.setVisibility(View.VISIBLE);
+        }
+        else {
+            viewHolder.tvMediaImage.setVisibility(View.GONE);
+        }
 
         viewHolder.tvProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
