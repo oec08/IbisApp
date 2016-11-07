@@ -37,16 +37,21 @@ public class Tweet {
         return user;
     }
 
+    public Entity getEntity() {
+        return entity;
+    }
+
     public String getCreatedAt() {
 
         return createdAt;
     }
 
     // List out the attributes
-    private String body;
-    private long uid; // unique id for the tweet
-    private User user;
-    private String createdAt;
+    String body;
+    long uid; // unique id for the tweet
+    User user;
+    Entity entity;
+    String createdAt;
 
     public static Tweet fromJSON(JSONObject jsonObject) {
         Tweet tweet = new Tweet();
@@ -56,6 +61,7 @@ public class Tweet {
             tweet.uid = jsonObject.getLong("id");
             tweet.createdAt = jsonObject.getString("created_at");
             tweet.user = User.fromJSONObject(jsonObject.getJSONObject("user"));
+            tweet.entity = Entity.fromJSONObject(jsonObject.getJSONObject("entities"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

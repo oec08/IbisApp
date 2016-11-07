@@ -33,6 +33,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
 
     private static class ViewHolder {
         ImageView tvProfileImage;
+        ImageView tvMediaImage;
         TextView tvUserName;
         TextView tvName;
         TextView tvBody;
@@ -53,6 +54,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
             viewHolder.tvName = (TextView)convertView.findViewById(R.id.tvName);
             viewHolder.tvBody = (TextView)convertView.findViewById(R.id.tvBody);
             viewHolder.tvTimeAgo = (TextView)convertView.findViewById(R.id.tvTimeAgo);
+            viewHolder.tvMediaImage = (ImageView)convertView.findViewById(R.id.ivImage);
             convertView.setTag(viewHolder);
         }
         else {
@@ -66,6 +68,13 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         viewHolder.tvBody.setText(tweet.getBody());
         viewHolder.tvProfileImage.setImageResource(android.R.color.transparent);
         Glide.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(viewHolder.tvProfileImage);
+//        if(tweet.getEntity()!= null) {
+//            viewHolder.tvMediaImage.setVisibility(View.VISIBLE);
+//            Glide.with(getContext()).load(tweet.getEntity().getMediaUrl()).into(viewHolder.tvMediaImage);
+//        }
+//        else {
+//            viewHolder.tvMediaImage.setVisibility(View.GONE);
+//        }
 
         viewHolder.tvProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override

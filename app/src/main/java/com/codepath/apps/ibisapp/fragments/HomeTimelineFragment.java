@@ -3,6 +3,7 @@ package com.codepath.apps.ibisapp.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -24,6 +25,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import butterknife.BindView;
@@ -39,11 +41,24 @@ public class HomeTimelineFragment extends TweetsListFragment {
     public TwitterClient client;
     @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     private Unbinder unbinder;
+
+    public static HomeTimelineFragment newInstance(Tweet tweet) {
+        HomeTimelineFragment homeTimelineFragment = new HomeTimelineFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("tweet", Parcels.wrap(tweet));
+        homeTimelineFragment.setArguments(args);
+        return homeTimelineFragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         client = TwitterAppApplication.getRestClient(); // Singleton client
         populateTimeline(1, false);
+        Tweet tweet  = getArguments().getParcelable("tweet");
+        if(tweet != null) {
+            postNewTweet(tweet);
+        }
     }
 
     @Nullable

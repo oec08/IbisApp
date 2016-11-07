@@ -14,6 +14,8 @@ import com.codepath.apps.ibisapp.R;
 import com.codepath.apps.ibisapp.adapters.TweetsArrayAdapter;
 import com.codepath.apps.ibisapp.models.Tweet;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +53,11 @@ public class TweetsListFragment extends Fragment {
 
     public void addAll(List<Tweet> tweetList) {
         aTweets.addAll(tweetList);
+        aTweets.notifyDataSetChanged();
+    }
+
+    public void postNewTweet(Tweet tweet) {
+        aTweets.insert(tweet, 0);
         aTweets.notifyDataSetChanged();
     }
 }

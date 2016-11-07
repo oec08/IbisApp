@@ -10,11 +10,11 @@ import org.parceler.Parcel;
 @Parcel
 public class User {
     // List attributes
-    private String name;
-    private long uid;
-    private String screenName;
-    private String profileImageUrl;
-    private String tagline;
+    String name;
+    long uid;
+    String screenName;
+    String profileImageUrl;
+    String tagline;
 
     public String getTagline() {
         return tagline;
