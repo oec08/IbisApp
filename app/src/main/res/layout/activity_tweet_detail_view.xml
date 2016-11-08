@@ -54,27 +54,29 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/retweet_icon"
         android:background="@android:color/transparent"
-        android:id="@+id/imageButton2"
-        android:layout_below="@+id/tvBodyDetail"
-        android:layout_toStartOf="@+id/tvUserNameDetail" />
+        android:layout_marginTop="20dp"
+        android:id="@+id/ibRetweetBtn"
+        android:layout_below="@+id/ivProfileImageDetail"
+        android:layout_toLeftOf="@+id/ibFavBtn"
+        android:layout_alignEnd="@+id/ivProfileImageDetail" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/favorites_icon"
+        android:layout_marginTop="20dp"
         android:background="@android:color/transparent"
-        android:id="@+id/imageButton3"
-        android:layout_alignBottom="@+id/imageButton"
+        android:id="@+id/ibFavBtn"
+        android:layout_below="@+id/ivProfileImageDetail"
         android:layout_centerHorizontal="true" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/reply_icon"
-        android:id="@+id/imageButton"
+        android:id="@+id/ibReplyBtn"
         android:background="@android:color/transparent"
-        android:layout_alignBottom="@+id/imageButton2"
-        android:layout_toEndOf="@+id/tvBodyDetail"
-        android:layout_marginStart="11dp" />
+        android:layout_alignTop="@+id/ibFavBtn"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

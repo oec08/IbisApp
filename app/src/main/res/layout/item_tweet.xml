@@ -62,4 +62,13 @@
         android:adjustViewBounds="true"
         android:visibility="gone"/>
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/reply_icon"
+        android:background="@android:color/transparent"
+        android:id="@+id/ibReplyBtn"
+        android:layout_below="@+id/ivImage"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

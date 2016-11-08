@@ -58,6 +58,13 @@ public class ComposeTweetDialog extends AppCompatDialogFragment implements TextV
     public interface EditNameDialogListener {
         void onFinishEditDialog(String inputText);
     }
+    public static ComposeTweetDialog newInstance(Tweet tweet) {
+        ComposeTweetDialog tweetToReply = new ComposeTweetDialog();
+        Bundle args = new Bundle();
+        args.putParcelable("tweet", Parcels.wrap(tweet));
+        tweetToReply.setArguments(args);
+        return tweetToReply;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

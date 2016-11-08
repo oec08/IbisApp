@@ -2,10 +2,12 @@ package com.codepath.apps.ibisapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.apps.ibisapp.R;
 import com.codepath.apps.ibisapp.activities.ProfileActivity;
+import com.codepath.apps.ibisapp.fragments.ComposeTweetDialog;
 import com.codepath.apps.ibisapp.models.Tweet;
 import com.codepath.apps.ibisapp.utils.StringUtils;
 import com.codepath.apps.ibisapp.utils.TimeFormatter;
@@ -34,6 +37,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
     private static class ViewHolder {
         ImageView tvProfileImage;
         ImageView tvMediaImage;
+        ImageButton replyButton;
         TextView tvUserName;
         TextView tvName;
         TextView tvBody;
@@ -55,6 +59,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
             viewHolder.tvBody = (TextView)convertView.findViewById(R.id.tvBody);
             viewHolder.tvTimeAgo = (TextView)convertView.findViewById(R.id.tvTimeAgo);
             viewHolder.tvMediaImage = (ImageView)convertView.findViewById(R.id.ivImage);
+            viewHolder.replyButton = (ImageButton)convertView.findViewById(R.id.ibReplyBtn);
             convertView.setTag(viewHolder);
         }
         else {
@@ -83,6 +88,15 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
                 intent.putExtra("user", Parcels.wrap(tweet.getUser()));
                 intent.putExtra("screen_name", tweet.getUser().getScreenName());
                 getContext().startActivity(intent);
+            }
+        });
+
+        viewHolder.replyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                FragmentManager fm = FragmentManager();
+//                ComposeTweetDialog composeTweetDialog = new ComposeTweetDialog();
+//                composeTweetDialog.show(fm, "fragment_compose_tweet");
             }
         });
 
