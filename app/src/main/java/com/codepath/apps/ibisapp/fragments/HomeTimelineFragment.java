@@ -28,6 +28,8 @@ import org.json.JSONObject;
 import org.parceler.Parcel;
 import org.parceler.Parcels;
 
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -85,20 +87,11 @@ public class HomeTimelineFragment extends TweetsListFragment {
             public boolean onLoadMore(int page, int totalItemsCount) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to your AdapterView
-                Handler handler = new Handler();
-                Runnable runnableCode = new Runnable() {
-                    @Override
-                    public void run() {
-                        // Do something here on the main thread
-                        Log.d("Waiting a second", "Called on main thread");
                         long currentMin = tweets.get(tweets.size() - 1).getUid();
                         if(currentMin > 0) {
                             currentMin = currentMin - 1;
                         }
                         populateTimeline(currentMin, false);
-                    }
-                };
-                handler.postDelayed(runnableCode, 1000);
                 return true; // ONLY if more data is actually being loaded; false otherwise.
             }
         });
@@ -169,5 +162,15 @@ public class HomeTimelineFragment extends TweetsListFragment {
     @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+    public boolean isOnline() {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            int     exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+        } catch (IOException e)          { e.printStackTrace(); }
+        catch (InterruptedException e) { e.printStackTrace(); }
+        return false;
     }
 }

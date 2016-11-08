@@ -20,7 +20,7 @@ public class Entity {
     public static Entity fromJSONObject(JSONObject jsonObject) {
         Entity entity = new Entity();
         try {
-           JSONArray media = jsonObject.getJSONArray("media");
+           JSONArray media = jsonObject.optJSONArray("media");
             if(media != null) {
                     for(int i = 0; i < media.length(); i++) {
                         JSONObject mediaObject = (JSONObject) media.get(i);
