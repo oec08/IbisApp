@@ -28,8 +28,8 @@ public class User {
         return followingCount;
     }
 
-    private int followersCount;
-    private int followingCount;
+    int followersCount;
+    int followingCount;
 
 
     public String getName() {

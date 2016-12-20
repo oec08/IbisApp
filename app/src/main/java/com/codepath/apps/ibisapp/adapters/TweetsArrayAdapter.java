@@ -2,6 +2,7 @@ package com.codepath.apps.ibisapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.codepath.apps.ibisapp.R;
 import com.codepath.apps.ibisapp.activities.ProfileActivity;
 import com.codepath.apps.ibisapp.fragments.ComposeTweetDialog;
 import com.codepath.apps.ibisapp.models.Tweet;
+import com.codepath.apps.ibisapp.utils.PatternEditableBuilder;
 import com.codepath.apps.ibisapp.utils.StringUtils;
 import com.codepath.apps.ibisapp.utils.TimeFormatter;
 import com.squareup.picasso.Picasso;
@@ -24,6 +26,7 @@ import com.squareup.picasso.Picasso;
 import org.parceler.Parcels;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by ocarty on 10/28/2016.
@@ -99,6 +102,16 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
 //                composeTweetDialog.show(fm, "fragment_compose_tweet");
             }
         });
+        new PatternEditableBuilder().
+                addPattern(Pattern.compile("\\@(\\w+)"), Color.BLUE,
+                        new PatternEditableBuilder.SpannableClickedListener() {
+                            @Override
+                            public void onSpanClicked(String text) {
+                                Intent intent = new Intent(getContext(), ProfileActivity.class);
+                                intent.putExtra("hashtag_user", text);
+                                getContext().startActivity(intent);
+                            }
+                        }).into(viewHolder.tvBody);
 
         return convertView;
     }
